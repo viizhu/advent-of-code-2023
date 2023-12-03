@@ -16,6 +16,15 @@ class PuzzleTwo
     puts valid_games.sum
   end
 
+  def self.part_2(games)
+    hash = max_cubes_by_color(games)
+    powers = []
+    hash.each do |game, pull|
+      powers << pull['red'].to_i * pull['green'].to_i * pull['blue'].to_i
+    end
+    puts "powers sum: #{powers.sum}"
+  end
+
   def self.max_cubes_by_color(games)
     hash = convert_to_hash(games)
     hash.map do |game, pulls|
@@ -51,5 +60,5 @@ class PuzzleTwo
     return hash
   end
 
-  part_1(data)
+  part_2(data)
 end
