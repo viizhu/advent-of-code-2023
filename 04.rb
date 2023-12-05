@@ -1,10 +1,12 @@
 class Puzzle4
-  attr_accessor :input, :card, :points
+  attr_accessor :input, :card, :points, :copies
 
   def initialize
     @input = File.readlines('04-input.txt')
     @card = []
     @points = []
+    @copies = []
+    convert_to_array
   end
 
   def convert_to_array
@@ -19,7 +21,6 @@ class Puzzle4
   end
 
   def find_winning_numbers
-    convert_to_array
     card.each do |card|
       matched = card[2] & card[1]
 
@@ -34,7 +35,31 @@ class Puzzle4
 
     puts "points: #{@points.sum}"
   end
+
+  def find_winning_cards
+    card.each do |c|
+      matched = c[2] & c[1]
+      count_matches(matched, c[0])
+
+      if copies.count(c[0]) > 0
+        copies.count(c[0]).times do
+          count_matches(matched, c[0])
+        end
+      end
+
+      copies << c[0]
+    end
+
+    puts "copies.count: #{copies.count}"
+  end
+
+  def count_matches(matched, i)
+    matched.count.times do
+      copies << i + 1
+      i += 1
+    end
+  end
 end
 
 
-Puzzle4.new.find_winning_numbers
+Puzzle4.new.find_winning_cards
