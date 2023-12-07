@@ -11,8 +11,8 @@ class Puzzle6
   end
 
   def format_input
-    @time = input[0].split(/\s/).drop(1).reject!(&:empty?).map(&:to_i)
-    @record = input[1].split(/\s/).drop(1).reject!(&:empty?).map(&:to_i)
+    @time = input[0].split(/:/).drop(1).map { |x| x.gsub(/\s+/, "") }.map(&:to_i)
+    @record = input[1].split(/:/).drop(1).map { |x| x.gsub(/\s+/, "") }.map(&:to_i)
   end
 
   def beat_record?(speed, time, distance)
