@@ -11,3 +11,4 @@
 | [Day 4: Scratchcards](https://adventofcode.com/2023/day/4)                    | https://github.com/viizhu/advent-of-code-2023/pull/4 |
 | [Day 5: If You Give A Seed A Fertilizer](https://adventofcode.com/2023/day/5) | https://github.com/viizhu/advent-of-code-2023/pull/5 |
 | [Day 6: Wait For It](https://adventofcode.com/2023/day/6)                     | https://github.com/viizhu/advent-of-code-2023/pull/6 |
+| [Day 7: Camel Cards](https://adventofcode.com/2023/day/7)                     | https://github.com/viizhu/advent-of-code-2023/pull/7 |
