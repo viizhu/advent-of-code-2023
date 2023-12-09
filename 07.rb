@@ -3,7 +3,7 @@ class Puzzle7
 
   def initialize
     @input = File.readlines('07-input.txt')
-    @ranks = {}
+    @ranks = {1 => [], 2 => [], 3 => [], 4 => [], 5 => [], 6 => [], 7 => []}
     @winnings = []
 
     format_input
@@ -19,34 +19,46 @@ class Puzzle7
     bids.map!(&:to_i)
 
     hands.each do |h|
-      calculate_types(h, hands, bids)
+      if h.include?('J')
+        sorted_j_hand = h.chars.sort(&:casecmp) # sort hand by card
+        j_card_dups = count_j_cards(sorted_j_hand) # find card duplicates
+        calculate_types(h, j_card_dups, hands, bids)
+      else
+        sorted_hand = h.chars.sort(&:casecmp) # sort hand by card
+        card_dups = count_cards(sorted_hand) # find card duplicates
+        calculate_types(h, card_dups, hands, bids)
+      end
     end
 
     @ranks = Hash[ ranks.sort_by { |key, val| key } ]
-    puts "ranks: #{ranks}"
+    puts "ranks[1]: #{ranks[1]}"
+    puts "ranks[2]: #{ranks[2]}"
+    puts "ranks[3]: #{ranks[3]}"
+    puts "ranks[4]: #{ranks[4]}"
+    puts "ranks[5]: #{ranks[5]}"
+    puts "ranks[6]: #{ranks[6]}"
+    puts "ranks[7]: #{ranks[7]}"
   end
 
   def convert_letter_cards(card)
     case card
     when 'T'
       10
-    when 'J'
-      11
     when 'Q'
-      12
+      11
     when 'K'
-      13
+      12
     when 'A'
-      14
+      13
+    when 'J'
+      1
     else
       card.to_i
     end
   end
 
-  def calculate_types(h, hands, bids)
-    sorted_hand = h.chars.sort(&:casecmp) # sort hand by card
+  def calculate_types(h, card_dups, hands, bids)
     idx = hands.index(h)
-    card_dups = count_cards(sorted_hand) # find card duplicates
     if card_dups.empty?
       # High card, where all cards' labels are distinct: 23456
       insert_into_rank(1, h, bids[idx])
@@ -81,12 +93,40 @@ class Puzzle7
     duplicates.uniq
   end
 
-  def insert_into_rank(rank, hand, bid)
-    if ranks[rank].nil?
-      ranks[rank] = [[hand, bid]]
-    else
-      ranks[rank] << [hand, bid]
+  def count_j_cards(hand)
+    duplicates = []
+    without_j = hand.reject { |e| e == 'J' }
+    without_j.each do |card|
+      duplicates << [card, hand.count(card)] if hand.count(card) > 1
     end
+    duplicates = duplicates.uniq
+    j_nums = 5 - without_j.length
+    if duplicates.length > 1
+      duplicates[0][1] = 3
+    elsif duplicates.empty?
+      case j_nums
+      when 1
+        duplicates << ['J', 2]
+      when 5
+        duplicates << ['J', 5]
+      else
+        duplicates << ['J', j_nums + 1]
+      end
+    else
+      case duplicates[0][1]
+      when 2
+        duplicates[0][1] = 2 + j_nums
+      when 3
+        duplicates[0][1] = 3 + j_nums
+      when 4
+        duplicates[0][1] = 4 + j_nums
+      end
+    end
+    duplicates.uniq
+  end
+
+  def insert_into_rank(rank, hand, bid)
+    ranks[rank] << [hand, bid]
   end
 
   def calculate_ranks(values)
