@@ -7,6 +7,8 @@ class Puzzle8
     @nodes = {}
 
     format_input
+    puts "directions: #{directions}"
+    puts "nodes: #{nodes}"
   end
 
   def format_input
@@ -18,7 +20,7 @@ class Puzzle8
     end
   end
 
-  def navigate
+  def navigate_pt1
     el = "AAA"
     steps = 1
     dir = 0
@@ -30,6 +32,33 @@ class Puzzle8
         dir < (directions.length - 1) ? dir += 1 : dir = 0
         steps += 1
       end
+    end
+    puts "steps: #{steps}"
+  end
+
+  def navigate
+    els = []
+    nodes.select do |k, v|
+      k.match(/..(A)/) ? els << k : next
+    end
+
+    puts "els: #{els}"
+    steps = 1
+    dir = 0
+    loop do
+      results = []
+      els.length.times do |i|
+        results << nodes[els[i]][directions[dir]]
+      end
+
+      counter = 0
+      results.each { |r| r.match(/..(Z)/) ? counter += 1 : next }
+      break if counter == els.length
+      els = results
+      dir < (directions.length - 1) ? dir += 1 : dir = 0
+      steps += 1
+
+      puts "els: #{els}, count: #{counter}"
     end
     puts "steps: #{steps}"
   end
