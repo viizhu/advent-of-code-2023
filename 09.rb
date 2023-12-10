@@ -42,8 +42,8 @@ class Puzzle9
     predictions.each do |k, v|
       predictions[k].each_with_index do |line, i|
         unless v[i+1].nil?
-          x = line.last + v[i+1].last
-          v[i+1] << x
+          x = v[i+1].first - line.first
+          v[i+1].unshift(x)
         end
 
       end
