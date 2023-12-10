@@ -12,3 +12,5 @@
 | [Day 5: If You Give A Seed A Fertilizer](https://adventofcode.com/2023/day/5) | https://github.com/viizhu/advent-of-code-2023/pull/5 |
 | [Day 6: Wait For It](https://adventofcode.com/2023/day/6)                     | https://github.com/viizhu/advent-of-code-2023/pull/6 |
 | [Day 7: Camel Cards](https://adventofcode.com/2023/day/7)                     | https://github.com/viizhu/advent-of-code-2023/pull/7 |
+| [Day 8: Haunted Wasteland](https://adventofcode.com/2023/day/8)               | https://github.com/viizhu/advent-of-code-2023/pull/8 |
+| [Day 9: Mirage Maintenance](https://adventofcode.com/2023/day/9)              | https://github.com/viizhu/advent-of-code-2023/pull/9 |
